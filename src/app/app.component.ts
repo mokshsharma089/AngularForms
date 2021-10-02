@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'forms';
+  showTempateForm:boolean=false;
+  showReactiveForm:boolean=true;
+  toggleForm(){
+    if(this.showReactiveForm==true){
+      this.showReactiveForm=false;
+      this.showTempateForm=true;
+    }
+    else{
+        this.showReactiveForm=true;
+        this.showTempateForm=false;
+    }
+  }
 }

@@ -1,0 +1,92 @@
+<style>
+   form p {
+        color:red;
+    }
+    .s{
+        width:500px;
+        text-align: center;
+    }
+</style>
+<p>template-forms works!</p>
+<div *ngIf="!submitted" class="s"> 
+    <form #templateForm="ngForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="userName">
+            Enter UserName (Should contain only letters and spaces):- 
+        </label>
+        <br><br>
+        <input type="text" 
+        name="userName" 
+        #userName="ngModel" 
+        [(ngModel)]="userNameTS"
+        required
+        pattern="[a-zA-Z ]*">
+        <!-- below div only shown if input was touched and invalid -->
+        <div *ngIf="userName.touched && userName.invalid">
+            <p *ngIf="userName.errors.required">
+                User Name cant be empty.
+            </p>
+            <p *ngIf="userName.errors.pattern">
+                User Name doesnt match pattern. 
+            </p>
+        </div>
+    </div>
+    <br><hr><br>
+    <div>
+        <label for="userEmail">
+            Enter email id :-
+        </label>
+        <br><br>
+        <!-- [ngModelOptions]="{ updateOn: 'blur' }" means The value updates once the form lost its focus. -->
+        <input type="email" 
+        name="userEmail" 
+        [(ngModel)]="emailTS" 
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        required 
+        #userEmail="ngModel" 
+        pattern="[a-zA-Z0-9_.]+@[a-z0-9.-]+\.[a-z]+">
+        <!-- below div only shown if input was touched and invalid -->
+        <div *ngIf="userEmail.touched && userEmail.invalid">
+            <p *ngIf="userEmail.errors.required">
+                Email is required.
+            </p>
+            <p *ngIf="userEmail.errors.pattern">
+                Enter Valid Email. 
+            </p>
+        </div>
+    </div>
+    <br><hr><br>
+    <div>
+        <label for="password">
+            Enter Password:-
+        </label>
+        <br><br>
+        <!-- notice class form-control here needed for custom validator "validatePasswordDirective"-->
+        <input type="password"
+        class="form-control"
+        name="password"
+        [(ngModel)]="passwordTS"
+        #pass="ngModel"
+        validatePasswordDirective>
+        <div *ngIf="pass.errors">
+            <!-- <p *ngIf="pass.errors.required">
+                Please Enter Password
+            </p> -->
+            <p *ngIf="pass.errors.passInvalid"> 
+                {{pass.errors.passInvalid}}
+            </p>
+        </div>
+    </div>
+    <br><hr><br>
+    <button type="submit" [disabled]="!templateForm.form.valid">Submit</button>
+    </form>
+</div>
+
+<div *ngIf="submitted" class="s">
+    <h1>Following Details were Submitted</h1>
+    User Name = <strong>{{userNameTS|titlecase}}</strong>
+    <br><hr><br>
+    Email = <strong>{{emailTS}}</strong>
+    <br><hr><br>
+    Password = <strong>{{passwordTS}}</strong>
+</div>

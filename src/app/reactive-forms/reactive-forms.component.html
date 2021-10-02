@@ -1,0 +1,66 @@
+<style>
+    form p {
+         color:red;
+     }
+     .s{
+         width:500px;
+         text-align: center;
+     }
+ </style>
+<p>reactive-forms works!</p>
+<div class="s" *ngIf="!submitted">
+    <form [formGroup]="registerForm">
+        <label>First Name :-</label>
+        <br><br>
+        <input type="text" formControlName="firstName">
+        <p *ngIf="registerForm.controls.firstName.errors">
+            This field is required!
+        </p>
+        <br><hr><br>
+        <label>Last Name :-</label>
+        <br><br>
+        <input type="text" formControlName="lastName">
+        <p *ngIf="registerForm.controls.lastName.errors">
+            This field is required!
+        </p>
+        <br><hr><br>
+        <label>Email</label>
+        <br><br>
+      <input type="text" class="form-control" formControlName="email">
+      <p *ngIf="registerForm.controls.email.errors?.emailInvalid">
+          {{registerForm.controls.email.errors?.emailInvalid.message}}
+        </p>
+      <br><hr><br> 
+      <fieldset formGroupName="address">
+          <label>Street :-</label>
+          <br>
+          <input type="text" formControlName="street">
+          <br>  <br>
+          <label>Zip :-</label>
+          <br>
+          <input type="text" formControlName="zip">
+          <br>  <br>
+          <label>City :-</label>
+          <br>
+          <input type="text" formControlName="city">
+        </fieldset>
+        <br><hr><br>
+      <button type="submit" (click)="submitted=true" [disabled]="!registerForm.valid">Submit</button>
+    </form>
+  <br/>
+    
+  </div>
+  <div *ngIf="submitted" class="s">
+    <h3> Employee Details </h3>
+    <p>First Name: <strong>{{ registerForm.get('firstName').value }}</strong> </p>
+    <br><hr>
+    <p> Last Name: <strong>{{ registerForm.get('lastName').value }}</strong> </p>
+    <br><hr>
+    <p> Email: <strong>{{ registerForm.get('email').value }}</strong> </p>
+    <br><hr>
+    <p> Street: <strong>{{ registerForm.get('address.street').value }}</strong></p>
+    <br><hr>
+    <p> Zip: <strong>{{ registerForm.get('address.zip').value }}</strong> </p>
+    <br><hr>
+    <p> City: <strong>{{ registerForm.get('address.city').value }}</strong></p>
+  </div>
